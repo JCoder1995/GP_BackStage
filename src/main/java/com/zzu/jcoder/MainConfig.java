@@ -1,6 +1,7 @@
 package com.zzu.jcoder;
 
 import com.jfinal.config.*;
+import com.jfinal.core.JFinal;
 import com.jfinal.kit.PropKit;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.druid.DruidPlugin;
@@ -43,5 +44,8 @@ public class MainConfig extends JFinalConfig {
 
     public void configHandler(Handlers handlers) {
 
+    }
+    public static void main(String[] args){
+        JFinal.start("src/main/webapp",80,"/");
     }
 }
