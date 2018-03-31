@@ -2,6 +2,7 @@ package com.zzu.jcoder;
 
 import com.jfinal.config.*;
 import com.jfinal.core.JFinal;
+import com.jfinal.json.FastJsonFactory;
 import com.jfinal.kit.PropKit;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.druid.DruidPlugin;
@@ -14,6 +15,8 @@ public class MainConfig extends JFinalConfig {
         // 加载少量必要配置，随后可用PropKit.get(...)获取值
         PropKit.use("a_little_config.txt");
         constants.setDevMode(PropKit.getBoolean("devMode", false));
+        constants.setJsonFactory(new FastJsonFactory());
+
     }
 
     public void configRoute(Routes routes) {
@@ -38,6 +41,7 @@ public class MainConfig extends JFinalConfig {
         // 所有映射在 MappingKit 中自动化搞定
         _MappingKit.mapping(arp);
         plugins.add(arp);
+        System.out.println("数据库加载完成");
     }
 
     public void configInterceptor(Interceptors interceptors) {
@@ -54,7 +58,7 @@ public class MainConfig extends JFinalConfig {
     }
 
     public static void main(String[] args){
-        JFinal.start("src/main/webapp",80,"/");
+        JFinal.start("src/main/webapp",8083,"/");
     }
 
 }
