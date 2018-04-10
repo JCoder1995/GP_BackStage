@@ -18,6 +18,19 @@ public class UserController extends Controller {
     public void login(){
         String userName = getPara("username");
         String passWord = getPara("password");
+        boolean status = Userexist(userName);
+        if (status){
+            List<User> user = User.dao.find("select * from `user` WHERE email='"+userName+"' and psw = '"+passWord+"'");
+            if (user!=null){
+                renderJson(ProductJSON(0,"success"));
+            }
+            else {
+                renderJson(ProductJSON(1,"error"));
+            }
+        }
+        else {
+            renderJson(ProductJSON(-1,"nothingness"));
+        }
     }
     //用户注册
     public void register(){
@@ -30,16 +43,10 @@ public class UserController extends Controller {
 
         if (status){
             new User().set("email",userName).set("psw",passWord).set("ctime",new Date()).set("nickName",nickName).set("phone",phone).save();
-            Gson gson = new Gson();
-            UserBean userBean = new UserBean(0,"success");
-            String jsonObject = gson.toJson(userBean);
-            renderJson(jsonObject);
+            renderJson(ProductJSON(0,"success"));
         }
         else {
-            Gson gson = new Gson();
-            UserBean userBean = new UserBean(1,"error");
-            String jsonObject = gson.toJson(userBean);
-            renderJson(jsonObject);
+            renderJson(ProductJSON(1,"error"));
         }
 
     }
@@ -57,5 +64,11 @@ public class UserController extends Controller {
         else {
             return false;
         }
+    }
+    //生成JSON 文件
+    public String ProductJSON(int code,String status){
+        Gson gson = new Gson();
+        UserBean userBean = new UserBean(code,status);
+        return gson.toJson(userBean);
     }
 }
