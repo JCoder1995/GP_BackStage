@@ -2,6 +2,8 @@ package com.zzu.jcoder.controller;
 
 import com.google.gson.Gson;
 import com.jfinal.core.Controller;
+import com.jfinal.plugin.activerecord.Db;
+import com.jfinal.plugin.activerecord.Record;
 import com.zzu.jcoder.bean.UserBean;
 import com.zzu.jcoder.model.User;
 
@@ -20,16 +22,19 @@ public class UserController extends Controller {
         String passWord = getPara("password");
         boolean status = Userexist(userName);
         if (status){
-            List<User> user = User.dao.find("select * from `user` WHERE email='"+userName+"' and psw = '"+passWord+"'");
-            if (user!=null){
+            List<Record> user = Db.find("select * from user WHERE email='"+userName+"' and psw = '"+passWord+"'");
+             if (user!=null){
                 renderJson(ProductJSON(0,"success"));
+                System.out.println("登陆成功");
             }
             else {
                 renderJson(ProductJSON(1,"error"));
+                System.out.println("登陆失败");
             }
         }
         else {
             renderJson(ProductJSON(-1,"nothingness"));
+            System.out.println("用户不存在");
         }
     }
     //用户注册
@@ -44,6 +49,7 @@ public class UserController extends Controller {
         if (status){
             new User().set("email",userName).set("psw",passWord).set("ctime",new Date()).set("nickName",nickName).set("phone",phone).save();
             renderJson(ProductJSON(0,"success"));
+
         }
         else {
             renderJson(ProductJSON(1,"error"));
@@ -57,13 +63,12 @@ public class UserController extends Controller {
 
     //判断用户是否存在
     public boolean Userexist(String usernName){
-        List<User> user = User.dao.find("select * from `user` WHERE email='"+usernName+"'");
-        if (user==null){
-            return  true;
+        List<User> user = User.dao.find("select * from user WHERE email='"+usernName+"'");
+        System.out.println("用户数量为"+user.size());
+        if (user.size()==0){
+            return  false;
         }
-        else {
-            return false;
-        }
+        else return true;
     }
     //生成JSON 文件
     public String ProductJSON(int code,String status){
