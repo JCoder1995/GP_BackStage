@@ -13,11 +13,16 @@ import java.util.List;
 
 public class FileController extends Controller {
 
-    public void getIndexFileList(){
+    public void getFileList(){
         String userId =  getPara("uid");
-        List<File> files = File.dao.find("SELECT * FROM file WHERE parent = "+0+" AND uid = "+userId);
+        String parentPath =  getPara("fid");
+        System.out.println(userId+" saadsdasdas"+parentPath);
+
+        List<File> files = File.dao.find("SELECT * FROM file WHERE parent = "+parentPath+" AND uid = "+userId);
+
         Gson gson = new Gson();
         renderJson(gson.toJson(files));
+        System.out.println(gson.toJson(files));
     }
 
     public void addFolder(){
@@ -27,7 +32,7 @@ public class FileController extends Controller {
         //判断文件夹是否存在
        if (folderDetection(folderName,parentPath,userId)){
            System.out.println("文件夹不存在");
-           new File().set("uid",userId).set("parent",parentPath).set("name",folderName).set("s_ctime",new Date()).save();
+           new File().set("uid",userId).set("parent",parentPath).set("name",folderName).set("filetype",0).set("s_ctime",new Date()).save();
             if (folderDetection(folderName,parentPath,userId)==false){
                 List<File> files = File.dao.find("SELECT * FROM file WHERE parent = "+parentPath+" AND uid = "+userId);
                 Gson gson = new Gson();
