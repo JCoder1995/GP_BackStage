@@ -7,6 +7,7 @@ import com.jfinal.kit.PropKit;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.druid.DruidPlugin;
 import com.jfinal.template.Engine;
+import com.zzu.jcoder.controller.FileController;
 import com.zzu.jcoder.controller.IndexController;
 import com.zzu.jcoder.controller.UserController;
 import com.zzu.jcoder.model._MappingKit;
@@ -23,6 +24,7 @@ public class MainConfig extends JFinalConfig {
     public void configRoute(Routes routes) {
         routes.add("/",IndexController.class);
         routes.add("/user",UserController.class);
+        routes.add("/file",FileController.class);
     }
 
     public void configEngine(Engine engine) {

@@ -54,7 +54,6 @@ public class UserController extends Controller {
         if (status){
             new User().set("email",userName).set("psw",passWord).set("ctime",new Date()).set("nickName",nickName).set("phone",phone).save();
             renderJson(ProductJSON(0,"success"));
-
         }
         else {
             renderJson(ProductJSON(1,"error"));

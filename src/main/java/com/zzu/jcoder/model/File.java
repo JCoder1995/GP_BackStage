@@ -5,4 +5,5 @@ import com.zzu.jcoder.model.base.BaseFile;
 
 public class File extends BaseFile<File> {
 
+    public static final File dao = new File().dao();
 }
