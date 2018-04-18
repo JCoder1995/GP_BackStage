@@ -1,28 +1,23 @@
 package com.zzu.jcoder.controller;
 
 
-import com.google.gson.Gson;
+import com.google.gson.*;
 import com.jfinal.core.Controller;
-import com.jfinal.plugin.activerecord.Db;
-import com.jfinal.plugin.activerecord.Record;
+import com.jfinal.json.FastJson;
 import com.zzu.jcoder.bean.UserBean;
 import com.zzu.jcoder.model.File;
+import org.json.JSONObject;
 
-import java.util.Date;
-import java.util.List;
+
+import java.util.*;
 
 public class FileController extends Controller {
 
     public void getFileList(){
         String userId =  getPara("uid");
         String parentPath =  getPara("fid");
-        System.out.println(userId+" saadsdasdas"+parentPath);
-
         List<File> files = File.dao.find("SELECT * FROM file WHERE parent = "+parentPath+" AND uid = "+userId);
-
-        Gson gson = new Gson();
-        renderJson(gson.toJson(files));
-        System.out.println(gson.toJson(files));
+        filesToJson(files);
     }
 
     public void addFolder(){
@@ -45,16 +40,6 @@ public class FileController extends Controller {
 
     }
 
-    public void addTxt(){
-
-    }
-
-    public void addPhoto(){
-
-    }
-    public void addFiles(){
-
-    }
     //判断文件是否存在
     public Boolean folderDetection(String name,String parent,String uid){
         System.out.println(name);
@@ -64,10 +49,17 @@ public class FileController extends Controller {
         }
         else return  false;
     }
+
     //生成JSON 文件
     public String ProductJSON(int code,String status) {
         Gson gson = new Gson();
         UserBean userBean = new UserBean(code, status);
         return gson.toJson(userBean);
     }
-    }
+
+    //对文件进行JSON 转化 前端少写一点
+    public void  filesToJson(List<File> files) {
+        Gson gson = new Gson();
+        renderJson(gson.toJson(files));
+        }
+}

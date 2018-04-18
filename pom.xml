@@ -31,6 +31,13 @@
 
 
   <dependencies>
+
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20180130</version>
+    </dependency>
+
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -84,6 +91,8 @@
       <artifactId>cos</artifactId>
       <version>2017.5</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.json/json -->
+
   </dependencies>
   <build>
     <finalName>GP_BackStage</finalName>
