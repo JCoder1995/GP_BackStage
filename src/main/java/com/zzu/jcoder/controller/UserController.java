@@ -28,7 +28,7 @@ public class UserController extends Controller {
             List<Record> user = Db.find(sql);
                     System.out.println("查询用户数量"+user.size());
             if (user.size()==1){
-                renderJson(ProductJSON(0,"success"));
+                renderJson(ProductJSON(2,"success"));
                 System.out.println("登陆成功");
             }
             else {
@@ -103,6 +103,19 @@ public class UserController extends Controller {
         String phone=returnUser.getStr("phone");
         String passWord=returnUser.getStr("psw");
         renderJson(ProductUserJSON(id,userName,nickName,phone,passWord));
+
+    }
+
+    public void postUserUpdate() {
+        String phone = getPara("phone");
+        String pass = getPara("pass");
+        String sql = "select * from user where phone = "+phone;
+        User user =  User.dao.findFirst(sql);
+        user.set("psw",pass);
+        user.update();
+        User user1 =  User.dao.findFirst(sql);
+        System.out.println(user1);
+        renderJson("success");
 
     }
 

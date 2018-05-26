@@ -1,4 +1,4 @@
 jdbcUrl = jdbc:mysql://115.159.209.140/GP?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
-user = root
-password =YApF8kntkvJa
+user = qcloud
+password =tencent
 devMode = true
