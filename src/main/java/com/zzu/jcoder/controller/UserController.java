@@ -49,9 +49,8 @@ public class UserController extends Controller {
         String nickName = getPara("nickName");
         String phone=getPara("phone");
         System.out.println("新用户注册"+new Date()+userName);
-        boolean status = Userexist(userName);
 
-        if (status){
+        if (Userexist(userName)==false){
             new User().set("email",userName).set("psw",passWord).set("ctime",new Date()).set("nickName",nickName).set("phone",phone).save();
             renderJson(ProductJSON(0,"success"));
         }
